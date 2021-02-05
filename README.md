@@ -1,3 +1,91 @@
+# **STEPS TO CREATE AN EC2 INSTANCE**
+
+* Login to AWS using your login details
+![AWS LOGIN](AWS-A.png)
+
+* Once you login into AWS successfully, you will see the main console with all the service listed as follows.
+![AWS SERVICES](AWS-B.png)
+
+* Before proceeding with the creation of an EC2 instance, Select the desired and closest region to you.
+![AWS REGION](AWS-C.png)
+
+* Click on **"Services"** at the upper left corner and you will see the following screen with all the Services available on AWS. Click on **"EC2"** available under **"Computer".**
+![AWS SERVICE](AWS-D.png)
+
+* To create an Instance, Click on "Launch Instance."
+![AWS LAUNCH INSTANCE](AWS-E.png)
+
+* Launch a new "EC2" instance of t2.micro family with Ubuntu Server 20.04 LTS(HVM)
+![Ubuntu 20.04](AWS-0.png)
+
+* Click on Next: Configure Instance Details to begin your Ubuntu's Server Configuration.
+![Configure Instance](AWS-1.png)
+
+* Next: Add Storage; to add or configure the Storage size and type.
+![ADD STORAGE](AWS-2.png)
+
+* Next: Add Tags. This gives you the opion to add a tag to your EC2 Instance.
+![ADD TAGS](AWS-3.png)
+
+* Click Next: Configure Security Group; to configure and set the rules as to what is allowed to connect outbound and inbound in our EC2 Instance.
+![Security Group](AWS-4.png)
+
+* Next: Click on Preview and Lauch.
+![Preview](AWS-5.png)
+
+* On the next page, Click on "Launch" to Launch the Ubuntu 20.04 LTS(HVM).
+![Launch](AWS-6.png)
+
+* Before the Instance creation starts, we need to select a key pair which is then required to take SSH access to the Server.
+
+* To create a new key-pair, Select "Create a new key-pair" from the drop down menu, give a name to the key-pair and download it. Keep the pair at a safe place.
+
+* As for me, I already created a key-pair, so I selected "Choose an existing key-pair"
+![Key-Pair](AWS-7.png)
+
+* Wait for some time until the instance gets created. Click on "View Instance" to check the Instance State and other details.
+![INSTANCE STATUS](AWS-F.png)
+
+* Once the Instance State changes from "Pending" to "Running" you can connect to the Instance.
+![INSTANCE STATE](AWS-G.png)
+
+# **CONNECT AND CONVERT PRIVATE KEY**
+* Once the Instance is available, Select the Instance and Click on "Connect". Copy the SSH Command to connect to the Instance.
+![CONNECT](AWS-H.png)
+
+* ### _CONVERT PRIVATE KEY USING PUTTYgen :_
+   * From the Start menu, Choose All Programs, PUTTY, PUTTYgen. Under Type of Key to generate, Choose RSA. If your version of PUTTYgen does not include this progam, Choose SSH-2 RSA.
+   ![PUTTYgen](putty1.png)
+   * Choose Load. By default, PuTTYgen displays only files with the extension _**.ppk**_. 
+   * To locate your _**.pem**_ file, Choose the option to display files to all types
+   ![FILE TYPES](putty2.png)
+   * Select your **_.pem_** file for the key pair that you specified when you launched your Instance and Choose **Open**. PuTTYgen displays a notice that the **_.pem_** file was successfully imported. Choose OK.
+   * To save the key in the format that PuTTY can use, Choose Save Private Key. PuTTYgen displays a warning about saving the key without a passphrase. Choose Yes.
+   * >**NOTE :** A passphrase on a private key is an extra layer of protection. Even if your private key is discovered, it can't be used without the passphrase. The downside to using a passphrase is that it makes automation harder because human intervention is needed to log on to an Instance, or to copy files to an Instance.
+   * Specify the same name for the key that you used for the key pair and choose Save.
+   * PuTTY automatically adds the **_.ppk_** file extension. Your Private key is now in the correct format for use with PuTTY. You can now connect to your Instance using PuTTY's SSH Client.
+
+## CONNECT USING PUTTY
+* On the Start menu, Choose All Programs, PuTTY, PuTTY. In the Category pane, Choose session and complete the following fields:
+
+  * For Host name, Enter: **ec2-user@public_dns_name**
+  > Note: You can get the public DNS for your Instance using the Amazon EC2 Console(If the public DNS column is hidden, Choose the Show/Hide icon).
+  * For connection type, Choose SSH
+  * For port, ensure that the value is **22**
+  ![PUTTY](putty3.png)
+
+* In the Category pane, Choose Connection, SSH, and Auth. Complete the following:
+
+  * Choose Browse, Select the **_.ppk_** file that you generated for your key pair, and then Choose Open.
+  * Choose Open to start the PuTTY Session
+  ![PUTTY SESSION](putty4.png)
+
+* If this is the first time you have connected to this Instance, PuTTY displays a Security alert dialog box that asks whether you trust the host you are connecting to. Choose Yes.
+* A window opens and you are connected to your Instance.
+
+**Congratulations**, our Linux Server and set up in the Cloud looks like this now.
+![Server Cloud](AwsCloudDiagram.png)
+
 # **LAMP STACK IMPLEMENTATION IN AWS**
 
 ## **The Four Layers of a LAMP Stack**
@@ -40,6 +128,7 @@ $ sudo ufw app list
 ```
 _**see my output:**_
 ![UFW APP](UfwAppList.png)
+
 _Available applications:_
 * Apache: This profile opens only port 80(normal, encrypted web traffic)
 * Apache Full: The profile opens port 80(normal encrypted web traffic) and port 443(TLS/SSL encrypted traffic)
@@ -216,7 +305,7 @@ phpinfo();
 * This page provides so much details about your installation and may pose a security risk, and you may have to remove it with the **rm** command.
 * To remove this page, **run :**
 ```Bash
-$ sudo rm/var/www/projectlamp/index.php
+$ sudo rm /var/www/projectlamp/index.php
 ```
 _**CONGRATULATIONS**_
 
