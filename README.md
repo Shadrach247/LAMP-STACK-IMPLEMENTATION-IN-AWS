@@ -136,9 +136,9 @@ _Available applications:_
 
 * To only allow HTTP traffic on port 80, **run:**
 ```Bash
-$ sudo ufw enable
 $ sudo ufw allow ssh
 $ sudo ufw allow http
+$ sudo ufw enable
 ```
 * And we can verify the change with:
 ```Bash
